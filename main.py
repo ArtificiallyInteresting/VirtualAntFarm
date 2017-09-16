@@ -4,8 +4,7 @@ from window import Window
 import pygame
 def startGame():
     window = Window(width=800, height=600)
-    colony = Colony(40, 20)
-    game = Game(colony, width=40, height=20)
+    game = Game(width=40, height=20)
     clock = pygame.time.Clock()
     while(not game.finished()):
         clock.tick(1)

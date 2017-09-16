@@ -42,4 +42,6 @@ class Window:
             return (0,0,255)
         elif s == State.FOOD:
             return (0,255,0)
+        elif s == State.COLONY:
+            return (0,255,255)
 

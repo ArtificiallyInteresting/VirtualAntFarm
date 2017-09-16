@@ -1,0 +1,14 @@
+Add colony behavior
+GAs
+graphics
+Board Generation
+Ants and colonies should have a "colony knowledge", only updated when returning to colony (or when it sees an ant with a more updated version?)
+-Colonies always have the updated knowledge. This is the one part that's "magic"
+Favor higher distance from the colony as a tiebreaker (probabilistically)
+genes can just be "probability of move success". Maybe probability of better move order?
+Saw it move towards the colony when it should have moved away :(
+
+New ant exploration:
+-Randomly pick a 'goal' point
+-Explore to there, stop to get food on the way
+-When goal point is reached, randomly select new goal point

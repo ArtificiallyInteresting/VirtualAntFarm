@@ -1,0 +1,15 @@
+Ant State Machine:
+-Find food
+-Return food
+-Explore
+-Fight Enemy
+-Attack Colony
+
+Colony:
+-If full on ants, do nothing
+-If ant is missing, start timer, make ant at end
+
+Board Generation:
+-More food at the top
+-Colonies at the bottom
+-Late game resources on bottom?
