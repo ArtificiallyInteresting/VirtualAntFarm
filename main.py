@@ -9,7 +9,7 @@ def startGame():
     while(not game.finished()):
         clock.tick(1)
         game.processTurn()
-        window.update(game.board)
+        window.update(game.board, game.colonies)
 
 if __name__ == '__main__':
     startGame()

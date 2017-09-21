@@ -31,3 +31,15 @@ def getNewPosition(currentPos, move):
 
 def removeValuesFromList(theList, val):
    return [value for value in theList if value != val]
+
+
+def getNeutralAntGenome():
+    return {
+        'startingHunger': 100,
+        'startingHealth': 100
+        # 'DesireForFood': 1,
+        # 'ReturnWhenHungry:': 1,
+        # 'DesireToFight': 1,
+        # 'ReturnWhenHurt': 1,
+        # 'Exploration': 1
+    }

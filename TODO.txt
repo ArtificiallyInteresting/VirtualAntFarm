@@ -1,14 +1,19 @@
 Add colony behavior
 GAs
 graphics
-Board Generation
-Ants and colonies should have a "colony knowledge", only updated when returning to colony (or when it sees an ant with a more updated version?)
--Colonies always have the updated knowledge. This is the one part that's "magic"
-Favor higher distance from the colony as a tiebreaker (probabilistically)
 genes can just be "probability of move success". Maybe probability of better move order?
-Saw it move towards the colony when it should have moved away :(
 
-New ant exploration:
--Randomly pick a 'goal' point
--Explore to there, stop to get food on the way
--When goal point is reached, randomly select new goal point
+Colonies can use food to generate new ants
+Ants can be worker ants or fighter ants. Only fighter ants can kill enemies, only workers can build tunnels and gather food.
+Metal resource?
+Maybe some kind of other colony investment with food?
+
+Things should be seaparated into early/mid/late game
+
+Maybe: If I see a place that I've seen before, I can pop off from my return list however many steps its been since I was there.
+Colonies should be able to signal to all ants that its under attack.
+
+For the MVP:
+Ants genes have hunger and max health
+Ants fight each other. Simply the distance between their health
+When ants are hurt at all, they go back to base
