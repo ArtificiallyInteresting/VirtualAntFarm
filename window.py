@@ -6,6 +6,7 @@ class Window:
         self.width = width
         self.height = height
         pygame.init()
+        pygame.font.init()
         self.display = pygame.display.set_mode((width, height))
         # create a new Surface
         self.surface = pygame.Surface((width, height))
@@ -31,6 +32,13 @@ class Window:
                 top = self.height - ((y + 1) * ySize)
                 pygame.draw.rect(self.surface, self.getColor(board[x][y], x, y, colonies), (left, top, xSize, ySize))
         self.display.blit(self.surface, (0, 0))
+        pygame.display.flip()
+
+    def displayGameOver(self):
+
+        myfont = pygame.font.SysFont('Calibri', 50)
+        textsurface = myfont.render('GAME OVER', False, (0, 0, 0))
+        self.display.blit(textsurface, (self.width/2 - 100, self.height/2 - 50))
         pygame.display.flip()
 
     def getColor(self, s, x, y, colonies):

@@ -68,6 +68,11 @@ class Game:
                colony1.health -= ant.health
 
     def finished(self):
+        for colony in self.colonies:
+            if colony.health <= 0:
+                return True
+            if len(colony.ants) == 0:
+                return True
         return False
 
     def processMoves(self, moves):

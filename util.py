@@ -35,7 +35,7 @@ def removeValuesFromList(theList, val):
 
 def getNeutralAntGenome():
     return {
-        'startingHunger': 100,
+        'startingHunger': 1,
         'startingHealth': 100
         # 'DesireForFood': 1,
         # 'ReturnWhenHungry:': 1,

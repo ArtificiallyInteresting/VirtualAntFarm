@@ -18,7 +18,7 @@ class Ant:
         self.maxHealth = genome["startingHealth"]
         self.maxHunger = genome["startingHunger"]
         self.health = self.maxHealth
-        self.hunger = self.maxHealth
+        self.hunger = self.maxHunger
         self.genome = genome
 
     def updateKnowledge(self, selectionArgs):
