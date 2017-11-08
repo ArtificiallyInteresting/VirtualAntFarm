@@ -2,14 +2,16 @@ import pygame
 from pygame.locals import *
 from game import State
 class Window:
-    def __init__(self, width=400, height=200):
+    def __init__(self, width=400, height=200, rows=20, cols=40):
         self.width = width
         self.height = height
+        self.infoHeight = .25 * height
         pygame.init()
         pygame.font.init()
         self.display = pygame.display.set_mode((width, height))
         # create a new Surface
         self.surface = pygame.Surface((width, height))
+        self.boardPercentage = .75
 
         # change its (background) color
         self.surface.fill((55, 155, 255))
@@ -17,22 +19,73 @@ class Window:
         # blit myNewSurface onto the main screen at the position (0, 0)
         self.display.blit(self.surface, (0, 0))
 
+        self.maxX = cols
+        self.maxY = rows
+        self.xSize = self.width/float(self.maxX)
+        self.ySize = ((self.height)/float(self.maxY)) * self.boardPercentage
+
         # update the sreen to display the changes
         pygame.display.flip()
+        self.images = {
+            'blueAnt': pygame.image.load('images/blueAnt.png').convert(),
+            'redAnt': pygame.image.load('images/redAnt.png').convert(),
+            'blueBase': pygame.image.load('images/blueBase.png',).convert(),
+            'redBase': pygame.image.load('images/redBase.png').convert(),
+            'dirt': pygame.image.load('images/dirt.png').convert(),
+            'food': pygame.image.load('images/food.png').convert(),
+            'tunnel': pygame.image.load('images/tunnel.png').convert()
+        }
 
     def update(self, board, colonies):
         pygame.event.get()
-        maxX = len(board)
-        maxY = len(board[0])
-        xSize = self.width/float(maxX)
-        ySize = (self.height)/float(maxY)
-        for x in range(maxX):
-            for y in range(maxY):
-                left = x * xSize
-                top = self.height - ((y + 1) * ySize)
-                pygame.draw.rect(self.surface, self.getColor(board[x][y], x, y, colonies), (left, top, xSize, ySize))
+        for x in range(self.maxX):
+            for y in range(self.maxY):
+                left = x * self.xSize
+                # Maybe use self.boardHeight instead of calculating on height and infoHeight?
+                top = (self.height - ((y + 1) * self.ySize)) - self.infoHeight
+                self.surface.blit(self.getImage(board[x][y], x, y, colonies), (left, top))
+                # pygame.draw.rect(self.surface, self.getColor(board[x][y], x, y, colonies), (left, top, xSize, ySize))
+        for ant in colonies[0].ants + colonies[1].ants:
+            self.drawName(ant, board)
+        self.drawInfo(board, colonies)
         self.display.blit(self.surface, (0, 0))
         pygame.display.flip()
+    def drawInfo(self, board, colonies):
+        pygame.draw.rect(self.surface, (0,0,0),(0, self.height - self.infoHeight, self.width, self.infoHeight))
+        i = 0
+        for ant in colonies[0].ants:
+            self.drawAntStats(ant, 'red', i)
+            i += 1
+        i = 0
+        for ant in colonies[1].ants:
+            self.drawAntStats(ant, 'blue', i)
+            i += 1
+
+    def drawAntStats(self, ant, color, number):
+        myfont = pygame.font.SysFont('Deja Vu Sans Mono', 10)
+        attributes = ['hunger', 'maxHunger', 'health', 'maxHealth']
+        antString = ant.name
+        textsurface = myfont.render(antString, False, (255, 255, 255))
+        x = 0 if color == 'red' else self.width/2
+        startingHeight = self.height-self.infoHeight+(10*number*(len(attributes)+2))
+        self.surface.blit(textsurface, (x, startingHeight))
+        i = 1
+        for attribute in attributes:
+            textsurface = myfont.render(attribute + ': ' + str(getattr(ant, attribute)), False, (255, 255, 255))
+            self.surface.blit(textsurface, (x+10, startingHeight + (10*i)))
+            i += 1
+
+    def drawName(self, ant, board):
+        pixelsPerChar = 7
+        textWidth = len(ant.name) * pixelsPerChar
+        left = ant.x * self.xSize
+        midX = left + (self.xSize/2)
+        top = (self.height - ((ant.y + 1) * self.ySize)) - self.infoHeight
+        myfont = pygame.font.SysFont('Deja Vu Sans Mono', 10)
+        #Back surface
+        pygame.draw.rect(self.surface, (255,255,255),(midX - textWidth/2, top-10, textWidth, self.ySize/2))
+        textsurface = myfont.render(ant.name, False, (0, 0, 0))
+        self.surface.blit(textsurface, (midX - textWidth/2, top-10))
 
     def displayGameOver(self):
 
@@ -40,6 +93,28 @@ class Window:
         textsurface = myfont.render('GAME OVER', False, (0, 0, 0))
         self.display.blit(textsurface, (self.width/2 - 100, self.height/2 - 50))
         pygame.display.flip()
+
+    def getImage(self, s, x, y, colonies):
+        if s == State.DIRT:
+            return self.images['dirt']
+        elif s == State.ANT:
+            return 	self.getAntImage(x,y,colonies)
+        elif s == State.EMPTY:
+            return self.images['tunnel']
+        elif s == State.FOOD:
+            return self.images['food']
+        elif s == State.COLONY:
+            return self.getColonyImage(x, y, colonies)
+    def getAntImage(self, x, y, colonies):
+        for ant in colonies[0].ants:
+            if (ant.x == x and ant.y == y):
+                return self.images['redAnt']
+        return self.images['blueAnt']
+    def getColonyImage(self, x, y, colonies):
+        if (x == colonies[0].x and y == colonies[0].y):
+            return self.images['redBase']
+        else:
+            return self.images['blueBase']
 
     def getColor(self, s, x, y, colonies):
         if s == State.DIRT:

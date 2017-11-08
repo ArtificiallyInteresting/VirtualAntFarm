@@ -18,3 +18,12 @@ Ants genes have hunger and max health
 Ants fight each other. Simply the distance between their health
 When ants are hurt at all, they go back to base
 When a game ends, the next one starts.
+
+Graphics:
+Red Ant
+Blue Ant
+Dirt
+Red Base
+Blue Base
+Tunneled
+Food

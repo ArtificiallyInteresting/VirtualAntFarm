@@ -20,6 +20,7 @@ class Ant:
         self.health = self.maxHealth
         self.hunger = self.maxHunger
         self.genome = genome
+        self.name = randomName()
 
     def updateKnowledge(self, selectionArgs):
         antBoard = selectionArgs["board"]

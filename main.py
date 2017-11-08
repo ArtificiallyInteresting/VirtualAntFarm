@@ -4,7 +4,7 @@ from window import Window
 import pygame
 import time
 def startGame():
-    window = Window(width=800, height=600)
+    window = Window(width=1280, height=720, rows=20, cols=40)
     clock = pygame.time.Clock()
     while(True):
         game = Game(width=40, height=20)
