@@ -86,6 +86,9 @@ class Colony:
             newy += 1
         elif move == 'S':
             newy -= 1
+        if (newx < 0 or newy < 0 or newx >= len(board) or newy >= len(board[0])):
+            print("Illegal move! Fix me!")
+            return []
         ant.x = newx
         ant.y = newy
         #Refactor this to game.py
