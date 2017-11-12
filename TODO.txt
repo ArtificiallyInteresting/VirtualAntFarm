@@ -27,3 +27,8 @@ Red Base
 Blue Base
 Tunneled
 Food
+
+numbers don't need to go out to 10 decimal places.
+Only the stats of four ants on each side can be shown.
+I want to have a visual separator between the sections.
+I want to display more stats and have more of the stats controlled by genetic algorithms

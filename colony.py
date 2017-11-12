@@ -70,9 +70,9 @@ class Colony:
     def mutatedAnt(self, genome1, genome2):
         newGenome = {}
         for attribute in genome1.keys():
-            newGenome[attribute] = (genome1[attribute] + genome2[attribute]) / 2
+            newGenome[attribute] = int((genome1[attribute] + genome2[attribute]) / 2)
         mutationAttribute = random.choice(list(genome1.keys()))
-        newGenome[mutationAttribute] = newGenome[mutationAttribute] * (random.random() + .5) #.5 could be higher, forces upward trend.
+        newGenome[mutationAttribute] = int(newGenome[mutationAttribute] * (random.random() + .5)) #.5 could be higher, forces upward trend.
         return self.generateAntFromGenome(newGenome)
     def executeMove(self, ant, move, board):
         clearOld = {'x': ant.x, 'y': ant.y, 'newSymbol': State.EMPTY}

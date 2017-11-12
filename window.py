@@ -48,32 +48,49 @@ class Window:
         for ant in colonies[0].ants + colonies[1].ants:
             self.drawName(ant, board)
         self.drawInfo(board, colonies)
+        #White visual separator
+        pygame.draw.rect(self.surface, (255,255,255), (0, self.height-self.infoHeight-1, self.width, 2))
         self.display.blit(self.surface, (0, 0))
         pygame.display.flip()
     def drawInfo(self, board, colonies):
         pygame.draw.rect(self.surface, (0,0,0),(0, self.height - self.infoHeight, self.width, self.infoHeight))
+        antsPerColumn = 3
         i = 0
         for ant in colonies[0].ants:
-            self.drawAntStats(ant, 'red', i)
+            self.drawAntStats(ant, 'red', i%antsPerColumn, int(i/antsPerColumn))
             i += 1
         i = 0
         for ant in colonies[1].ants:
-            self.drawAntStats(ant, 'blue', i)
+            self.drawAntStats(ant, 'blue', i%antsPerColumn, int(i/antsPerColumn))
             i += 1
 
-    def drawAntStats(self, ant, color, number):
+    def drawAntStats(self, ant, color, numberY, numberX):
+        widthOfColumn = 150
         myfont = pygame.font.SysFont('Deja Vu Sans Mono', 10)
         attributes = ['hunger', 'maxHunger', 'health', 'maxHealth']
         antString = ant.name
         textsurface = myfont.render(antString, False, (255, 255, 255))
         x = 0 if color == 'red' else self.width/2
-        startingHeight = self.height-self.infoHeight+(10*number*(len(attributes)+2))
+        x += numberX * widthOfColumn
+        startingHeight = self.height-self.infoHeight+(10*numberY*(len(attributes)+2))
         self.surface.blit(textsurface, (x, startingHeight))
         i = 1
         for attribute in attributes:
-            textsurface = myfont.render(attribute + ': ' + str(getattr(ant, attribute)), False, (255, 255, 255))
+            displayName = self.getDisplayName(attribute)
+            textsurface = myfont.render(displayName + ': ' + str(getattr(ant, attribute)), False, (255, 255, 255))
             self.surface.blit(textsurface, (x+10, startingHeight + (10*i)))
             i += 1
+
+    def getDisplayName(self, attribute):
+        attributes = {
+            'hunger': 'Food',
+            'maxHunger': 'Max Food',
+            'health': 'Health',
+            'maxHealth': 'Max Health'
+        }
+        if attribute not in attributes.keys():
+            return attribute
+        return attributes[attribute]
 
     def drawName(self, ant, board):
         pixelsPerChar = 7
