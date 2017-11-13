@@ -56,10 +56,12 @@ class Game:
                     #Should be based on strength, not just health.
                     if (ant.health > otherant.health):
                         ant.health = ant.health - otherant.health
-                        colony2.ants.remove(otherant)
+                        if otherant in colony2.ants:
+                            colony2.ants.remove(otherant)
                     else:
                         otherant.health = otherant.health - ant.health
-                        colony1.ants.remove(ant)
+                        if otherant in colony2.ants:
+                            colony1.ants.remove(ant)
        for ant in colony1.ants:
            if (ant.x == colony2.x and ant.y == colony2.y):
                colony2.health -= ant.health
