@@ -60,7 +60,7 @@ class Game:
                             colony2.ants.remove(otherant)
                     else:
                         otherant.health = otherant.health - ant.health
-                        if otherant in colony2.ants:
+                        if otherant in colony1.ants:
                             colony1.ants.remove(ant)
        for ant in colony1.ants:
            if (ant.x == colony2.x and ant.y == colony2.y):

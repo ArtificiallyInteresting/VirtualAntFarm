@@ -103,6 +103,8 @@ class Ant:
         elif self.state == AntState.GETFOOD:
             action = self.moveTowards(self.getClosestFood(), antBoard, tunnelsOnly=False)
         elif self.state == AntState.RETURNTOBASE:
+            if len(self.pathBackToBase) == 0:
+                action = random.choice(self.getValidMoves())
             action = self.pathBackToBase.pop()
             # action = self.moveTowards(homeCol, antBoard, backtrack=False)
             # action = self.moveTowards(homeCol, antBoard, tunnelsOnly=False)
@@ -144,7 +146,7 @@ class Ant:
             elif (len(self.knowledge["food"]) == 0):
                 self.state = AntState.EXPLORE
         elif self.state == AntState.RETURNTOBASE:
-            if (self.x == self.knowledge['homeColony'][0] and self.y == self.knowledge['homeColony'][1]):
+            if (len(self.pathBackToBase) == 0 or (self.x == self.knowledge['homeColony'][0] and self.y == self.knowledge['homeColony'][1])):
                 self.state = AntState.EXPLORE if len(self.knowledge['food']) == 0 else AntState.GETFOOD
 
     def shouldRetreat(self):
