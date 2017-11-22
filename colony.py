@@ -55,7 +55,7 @@ class Colony:
     def generateNewAnt(self):
         log("Generating new ant")
         if (len(self.ants) == 0):
-            self.ants.append(getNeutralAntGenome())
+            self.ants.append(self.generateNeutralAnt())
             log("No ants, generating neutral genome")
         elif (len(self.ants) == 1):
             self.ants.append(self.mutatedAnt(self.ants[0].genome, self.ants[0].genome))
