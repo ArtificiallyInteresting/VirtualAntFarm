@@ -105,7 +105,8 @@ class Ant:
         elif self.state == AntState.RETURNTOBASE:
             if len(self.pathBackToBase) == 0:
                 action = random.choice(self.getValidMoves())
-            action = self.pathBackToBase.pop()
+            else:
+                action = self.pathBackToBase.pop()
             # action = self.moveTowards(homeCol, antBoard, backtrack=False)
             # action = self.moveTowards(homeCol, antBoard, tunnelsOnly=False)
         # Move to function
